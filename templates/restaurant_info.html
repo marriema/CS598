@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="eng">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/restaurant_info.css') }}">
+  <link href="//cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css"  rel="stylesheet">
+ <script src="//cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+
+  <style>
+      .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: auto;
+    text-align: center;
+    font-family: arial;
+  }
+  
+.location {
+    color: grey;
+    font-size: 22px;
+  }
+
+  </style>
+  
+</head>
+
+<body>
+       
+    <div class="card" style="float: left; width: 50%;">
+        <img style="width: 50%;height: 50%" src="https://freeiconshop.com/wp-content/uploads/edd/food-flat.png" alt="pic" style="width:100%">
+        <h1>restaurant name</h1>
+        <p class="location">310 E Springfield ave</p>
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+
+        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+    </div>
+
+    <div>
+        <h2>Posts In This Restaurant</h2>
+        <form>
+            <input type="radio" name="person" value="Jack"> Jack <span><i style="color:green" class="fas fa-clock"></i> 13:30 <span><label>spicy food</label></span></span><br>
+            <input type="radio" name="person" value="Rose"> Rose <br>
+            <br><br>
+            <input type="submit" value="Submit">
+        </form> 
+
+        <br><br>
+        <form>
+            Time: <input type="time" id="myTime">        
+            <input type="submit" value="Submit">
+            
+        </form>
+       
+        
+      
+              
+    </div>
+ 
+   
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html lang="eng">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_profile.css') }}">
+  
+</head>
+
+<body>
+  <div class="sidebar">
+      <a class="active" id="profile_page">Home</a>
+      <a id="preference_page">Information about me</a>
+      <a id="message_page">Message Box</a>
+  </div>
+
+  <div class="content">
+    <h1>Name: {{ userName }} </h1>
+    <h1>Phone number: </h1>
+  </div>
+
+  <script>
+      var userName = JSON.parse('{{ userName | tojson }}')
+      document.getElementById("profile_page").setAttribute("href", "/profile/" + userName);
+      document.getElementById("preference_page").setAttribute("href", "/preferences/" + userName);
+      document.getElementById("message_page").setAttribute("href", "/messages/" + userName);
+  </script>
+</body>
+</html>
