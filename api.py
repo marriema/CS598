@@ -27,9 +27,17 @@ def index():
 def restaurants():
 	return render_template("main.html")
 
-@app.route("/restaurant_detail", methods=["GET", "POST"])
-def restaurant_detail():
-	return render_template("restaurant_info.html")
+@app.route("/restaurant_detail/<string:RestaurantName>", methods=["GET", "POST"])
+def restaurant_detail(RestaurantName):
+	RestaurantInfo = restaurants.find_one({"name": RestaurantName})
+	cursor = posts.find({"restaurant": RestaurantName})
+	
+	if request.method == 'GET':
+		restaurantPosts = []
+		for post in cursor:
+			restaurantPosts.append(post)
+		return render_template("restaurant_info.html", RestaurantInfo=RestaurantInfo, posts=restaurantPosts)
+
 
 @app.route("/profile/<string:userName>", methods=["GET"])
 def profile(userName):
@@ -77,6 +85,18 @@ def preferences(userName):
 										 {'$set': {"hobbyTags":hobbyPrefs}})
 			return redirect(url_for('preferences', userName = userName))
 
+
+@app.route("/preferences_public/<string:userName>", methods=["GET"])
+def preference_read_only(userName):
+	
+	if request.method == 'GET':
+		userInfo = users.find_one({"userName":userName})
+		foodPrefs = userInfo["foodTags"]
+		languagePrefs = userInfo["languageTags"]
+		hobbyPrefs = userInfo["hobbyTags"]
+
+		preferenceList = {'food': foodPrefs, 'language': languagePrefs, 'hobby': hobbyPrefs}
+		return render_template("public_preference.html", preferenceList = preferenceList, userName = userName)
 
 
 @app.route("/messages", methods=["GET", "POST"])

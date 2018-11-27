@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user_profile_preferences.css') }}">
+    <script>
+        var preferenceList = JSON.parse('{{ preferenceList | tojson }}');
+        var foodList = preferenceList.food;
+        var lanList = preferenceList.language;
+        var hobbyList = preferenceList.hobby;
+        console.log(foodList);
+    </script>
+</head>
+
+<body>
+    <div class="content">
+        <h1 style="color: #726666"> Information About {{ userName }} </h1>
+        
+        
+        <div class="card tag_list">
+            <span><h3 style="font-family: Verdana;color:#726666;">Food Preferences</h3></span>
+            <div class="wrapper" id="wrapper1">
+               
+            </div>
+        </div>
+        
+        <div class="card tag_list">
+            <span><h3 style="font-family: Verdana;color:#726666;">Languages</h3></span>
+            <div class="wrapper" id="wrapper2">
+                   
+            </div>
+        </div>
+
+        <div class="card tag_list">
+            <span><h3 style="font-family: Verdana;color:#726666;">Hobbies and Interests</h3></span>
+            <div class="wrapper" id="wrapper3">
+        
+            </div>
+        </div>
+
+    
+        
+    </div>
+
+    <script>
+        var userName = JSON.parse('{{ userName | tojson }}')
+        
+        var text = "";
+        for(var i = 0; i < foodList.length; i++)
+        {
+            text += "<span class='label food_tag'>" + foodList[i] +"</span>";
+        }
+        document.getElementById("wrapper1").innerHTML = text;
+        
+        text = "";
+        for(var i = 0; i < lanList.length; i++)
+        {
+            text += "<span class='label language_tag'>" + lanList[i] +"</span>";
+        }
+        document.getElementById("wrapper2").innerHTML = text;
+
+        text = "";
+        for(var i = 0; i < hobbyList.length; i++)
+        {
+            text += "<span class='label hobby_tag'>" + hobbyList[i] +"</span>";
+        }
+        document.getElementById("wrapper3").innerHTML = text;
+    </script>
+</body>
+</html>

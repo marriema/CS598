@@ -20,46 +20,135 @@
     color: grey;
     font-size: 22px;
   }
+  .post, .card{
+    float:left;
+}
+
+
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+.lala {
+  font-family: "Open Sans", sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  background: #1e88e5;
+  color: #fff;
+}
+h1 {
+  font-size: 1.2em;
+  padding-left: 15px;
+  padding-bottom: 5px;
+  padding-right: 30px;
+  border-left: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  text-transform: uppercase;
+  margin-bottom: 1.5em;
+  letter-spacing: 3px;
+  font-weight: 600;
+}
+
+label {
+  display: block;
+  margin-bottom: 1.5em;
+}
+label > input {
+  display: none;
+}
+label > i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  border: 2px solid #fff;
+  box-shadow: inset 0 0 0 4px #1e88e5;
+  transition: 0.25s;
+}
+label > span {
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 2px dotted #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.9em;
+}
+label > input:checked + i {
+  background: #fff;
+}
+label:hover {
+  cursor: pointer;
+}
+
 
   </style>
   
 </head>
 
 <body>
-       
-    <div class="card" style="float: left; width: 50%;">
+    <div class="card">
         <img style="width: 50%;height: 50%" src="https://freeiconshop.com/wp-content/uploads/edd/food-flat.png" alt="pic" style="width:100%">
-        <h1>restaurant name</h1>
-        <p class="location">310 E Springfield ave</p>
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+        <h1>{{ RestaurantInfo["name"] }}</h1>
+        <br></br>
+        <p class="location">
+            {{ RestaurantInfo["street"] }},
 
-        <p>Some text about the jeans. Super slim and comfy lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+            {{ RestaurantInfo["city"] }},
+           
+            {{ RestaurantInfo["state"] }},
+            
+            {{ RestaurantInfo["zipCode"] }}
+        </p>
+        <br></br>
+
+        <h2 style="font-family: Helvetica;">This is a/an <span style="color: #4876FF">{{ RestaurantInfo["type"] }}</span> Restaurant</h2>
+       
     </div>
 
-    <div>
-        <h2>Posts In This Restaurant</h2>
+    <div class="post">
+
+        <form class='lala'>
+            <h2>Posts In This Restaurant</h2>
+            {% for each in posts %}
+            <label>
+                <input type="radio" name="person" value="{{ each.sender }}"/> 
+                <i></i>
+                <span>{{ each.sender }} <span><i style="color:green" class="fas fa-clock"></i> {{ each.time }}</span><br></span>
+                <br>
+                <a href="{{ '/preferences_public/%s'%each.sender }}">view {{ each.sender}} 's information</a>
+            </label>
+            {% endfor %}
+        </form>
+        <!--
         <form>
-            <input type="radio" name="person" value="Jack"> Jack <span><i style="color:green" class="fas fa-clock"></i> 13:30 <span><label>spicy food</label></span></span><br>
-            <input type="radio" name="person" value="Rose"> Rose <br>
+            {% for each in posts %}
+                <input type="radio" name="person" value="{{ each.sender }}"> {{ each.sender }} <span><i style="color:green" class="fas fa-clock"></i> {{ each.time }}</span><br>
+                <a href="{{ '/preferences_public/%s'%each.sender }}">view {{ each.sender}} 's information</a>
+                <br></br>
+            {% endfor %}
+           
             <br><br>
             <input type="submit" value="Submit">
         </form> 
-
-        <br><br>
-        <form>
-            Time: <input type="time" id="myTime">        
-            <input type="submit" value="Submit">
-            
-        </form>
+    -->
+    <br><br>
+    <form class='lala'>
+        Time: <input type="time" id="myTime">        
+        <input type="submit" value="Submit">
+        
+    </form>
+         
+    </div>
        
         
       
-              
-    </div>
+    
+
+    <script>
+        
+    </script>
  
    
 </body>
