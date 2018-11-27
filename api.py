@@ -22,10 +22,16 @@ def index():
 
 		return redirect(url_for('index'))
 
+@app.route("/getAllRestaurantsInfo", methods=["GET"])
+#get all resturants Infomation
+def getAllRestaurantsInfo():
+	RestaurantsInfo = Restaurants.find({})
+	return jsonify(list(RestaurantsInfo))
 
 @app.route("/restaurants", methods=["GET"])
 def restaurants():
-	return render_template("main.html")
+	RestaurantsInfo = restaurants.find({})
+	return render_template("main.html", RestaurantsInfo=RestaurantsInfo)
 
 @app.route("/restaurant_detail/<string:RestaurantName>", methods=["GET", "POST"])
 def restaurant_detail(RestaurantName):

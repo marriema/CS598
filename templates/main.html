@@ -48,7 +48,13 @@
         <label for="cuisines-select">cuisines-select</label>
       </div>
       <!-- Restaurant List table part see main.js--use js to create html tags+content-->
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list">
+          {% for each in RestaurantsInfo %}
+            {{ each.name }}
+          {% endfor %}
+          
+        <li> </li>
+      </ul>
       <!-- end restaurant -->
     </section>
 
