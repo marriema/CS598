@@ -11,22 +11,38 @@ def index():
 	if request.method == 'GET':
 		return render_template("index.html")
 	else:
-		userName = request.form['username']
-		password = request.form['password']
-		userInfo = users.find_one({"userName":userName})
-		foundPassword = userInfo["password"]
-	
-		if str(foundPassword) == password:
-			session['userName'] = userName
-			return redirect(url_for('profile', userName=userName))
+		if request.form['submit_btn'] == 'Register':
+			newName = request.form['newUserName']
+			newEmail = request.form['newUserEmail']
+			newPass = request.form['newUserPass']
+			return redirect(url_for('addNewUserAccount', username=newName, password=newPass))
+		else:
+			userName = request.form['username']
+			password = request.form['password']
+			userInfo = users.find_one({"userName":userName})
+			foundPassword = userInfo["password"]
+		
+			if str(foundPassword) == password:
+				session['userName'] = userName
+				return redirect(url_for('profile', userName=userName))
 
-		return redirect(url_for('index'))
+			return redirect(url_for('index'))
+
+
+@app.route("/<string:username>/createAccount/<string:password>", methods=["POST"])
+def addNewUserAccount(username,password):
+	print(userName)
+	newUserAccount = {"userName":username, "password":password, "foodTags": [], "languageTags":[], "hobbyTags":[] }
+	users.insert_one(newUserAccount)
+	return
+
 
 @app.route("/getAllRestaurantsInfo", methods=["GET"])
 #get all resturants Infomation
 def getAllRestaurantsInfo():
 	RestaurantsInfo = Restaurants.find({})
 	return jsonify(list(RestaurantsInfo))
+
 
 @app.route("/restaurants", methods=["GET"])
 def restaurants():
@@ -51,7 +67,6 @@ def profile(userName):
 
 @app.route("/preferences/<string:userName>", methods=["GET", "POST"])
 def preferences(userName):
-	
 	if request.method == 'GET':
 		userInfo = users.find_one({"userName":userName})
 		foodPrefs = userInfo["foodTags"]
