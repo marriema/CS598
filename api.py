@@ -15,7 +15,9 @@ def index():
 			newName = request.form['newUserName']
 			newEmail = request.form['newUserEmail']
 			newPass = request.form['newUserPass']
-			return redirect(url_for('addNewUserAccount', username=newName, password=newPass))
+			addNewUserAccount(newName, newPass)
+
+			return redirect(url_for('index'))
 		else:
 			userName = request.form['username']
 			password = request.form['password']
@@ -29,9 +31,7 @@ def index():
 			return redirect(url_for('index'))
 
 
-@app.route("/<string:username>/createAccount/<string:password>", methods=["POST"])
 def addNewUserAccount(username,password):
-	print(userName)
 	newUserAccount = {"userName":username, "password":password, "foodTags": [], "languageTags":[], "hobbyTags":[] }
 	users.insert_one(newUserAccount)
 	return
