@@ -178,6 +178,17 @@ h2::after {
   padding: 10px;
 }
 
+input[type=text] {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+
   </style>
   
 </head>
@@ -215,7 +226,7 @@ h2::after {
     <div id="features" class="text-center">
         <div class="container">
           <div class="section-title">
-            <h2>Posts</h2>
+            <h2>Previous Posts</h2>
           </div>
       
           <form class='lala'>
@@ -230,12 +241,26 @@ h2::after {
               </label>
               {% endfor %}
     
-              <input style="margin-left:45%;" type="submit" class="btn btn-custom btn-lg"></input>
+              <!-- <style>p.indent{ padding-left: 1.8em }</style> -->
+              <img style="margin-left:15%;" src="https://image.flaticon.com/icons/png/128/25/25691.png" height="42" width="42">
+              <text style="margin-left:1%; font-family:courier;">Respond To Previous Posts:</text><br>
+              <text style="margin-left:20%; font-family:courier;">Message:</text>
+              <input style="margin-left:1%;" type="text" name="responseMessage" value="Hello"></input>
+              <input style="margin-left:5%;" type="submit" class="btn btn-custom btn-lg"></input><br>
+
+              <img style="margin-left:15%;" src="https://image.freepik.com/free-icon/add-file-button_318-85871.jpg" height="42" width="42">
+              <text style="margin-left:1%; font-family:courier;">Add A New Post:</text><br>
+              <text style="margin-left:20%; font-family:courier;">Select A Time:</text>
+              <form class='lala'>
+                  <input type="time" id="myTime">        
+                  <input style="margin-left:24%;" type="submit" value="Submit" class="btn btn-custom btn-lg"></input>
+                  
+              </form>
           </form>
         </div>
         
       </div>
-
+<!-- 
     <div class="post">
 
      
@@ -247,7 +272,7 @@ h2::after {
           
       </form>
          
-    </div>
+    </div> -->
        
  
    
