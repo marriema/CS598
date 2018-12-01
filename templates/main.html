@@ -5,15 +5,70 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Rochester" rel="stylesheet">
+
   <title>Restaurant Reviews</title>
+  <style>
+    div.gallery {
+    border: 1px solid #ccc;
+}
+
+div.gallery:hover {
+    border: 1px solid #777;
+}
+
+div.gallery img {
+    width: 100%;
+    height: auto;
+}
+
+div.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.responsive {
+    padding: 0 6px;
+    float: left;
+    width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+    .responsive {
+        width: 49.99999%;
+        margin: 6px 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .responsive {
+        width: 100%;
+    }
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+body{
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+}
+  </style>
 </head>
 
 <body>
   <header>
     <nav>
       <h1>
-        <a href="/">Restaurant Reviews</a>
+        <a href="/">Restaurants</a>
       </h1>
     </nav>
   </header>
@@ -26,7 +81,7 @@
         var map;
         function initMap() {
           map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 40.722216, lng: -73.987501},
+            center: {lat: 40.119056, lng: -88.242660},
             zoom: 12
           });
         }
@@ -36,7 +91,7 @@
 
     </section>
     <section>
-      <div class="filter-options">
+      <div class="filter-options" style="margin-bottom: 10px">
         <h2>Filter Results</h2>
         <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
@@ -47,38 +102,32 @@
         </select>
         <label for="cuisines-select">cuisines-select</label>
       </div>
-      <!-- Restaurant List table part see main.js--use js to create html tags+content-->
-      <ul id="restaurants-list">
-          {% for each in RestaurantsInfo %}
-            {{ each.name }}
-          {% endfor %}
-          
-        <li> </li>
-      </ul>
-      <!-- end restaurant -->
     </section>
 
-
-
-
-
-
-
+      
+      <!-- Restaurant List table part see main.js--use js to create html tags+content-->
+      
+      {% for each in RestaurantsInfo %}
+      <div class="responsive">
+        <div class="gallery">
+          <a target="_blank" href="{{ '/restaurant_detail/%s'%each.name }}">
+            {% set src = "static/img/" ~ each.id  %}
+            {% set src = src + ".jpg" %}
+            <img src="{{ src }}" alt="{{ src }}" style="width:100%;height:300px;">
+          </a>
+          <div class="desc">{{ each.name }}</div>
+        </div>
+      </div>
+      {% endfor %}
+          
+        
+      <!-- end restaurant -->
   </main>
 
-<!--   <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
- -->  <!-- <script type="application/javascript" charset="utf-8" src="js/main.js"></script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcGMYfAKTYS5lPULrP0c3Ho3vENchd1ik
-&libraries=places&callback=initMap"></script> -->
 
-
-  <footer id="footer">
-    Copyright (c) 2017
-    <a href="/">
-      <strong>Restaurant Reviews</strong>
-    </a> All Rights Reserved.
-  </footer>
 
 </body>
+
+
 
 </html>

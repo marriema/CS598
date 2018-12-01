@@ -280,7 +280,7 @@ label {
 
 .inside #footer {
   bottom: 0;
-  position: absolute;
+  position: relative;
   width: 45%;
 }
 
@@ -438,8 +438,6 @@ label {
     margin: auto;
   }
   .inside #footer {
-    order: 4;
-    width: 100vw;
     padding-left: 0;
     padding-right: 0;
     padding-top: 10px;
