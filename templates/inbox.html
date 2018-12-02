@@ -189,11 +189,11 @@ h2::after {
             <h2>My Inbox</h2>
           </div>
       
-          <form method="post" class='lala'>
+          <form class='lala' method="post">
             {% for key, value in SenderList.items() %}
               <label style="text-align: center;">
                   <label>{{ IDList[key] }}</label>
-                  <input type="radio" name="sender" value="{{ key }}"/> 
+                  <input type="radio" name="sender" value="{{ key }}_{{ IDList[key] }}"/> 
                   <i></i>
                   <span>{{ key }} <span><i style="color:#a7c44c" class="fas fa-clock"></i> {{ value }}</span><br></span>
                   <br>

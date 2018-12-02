@@ -44,6 +44,12 @@ def getAllRestaurantsInfo():
 	return jsonify(list(RestaurantsInfo))
 
 
+def addNewConfirmation(acceptor, acceptee, postID):
+	newID = postID
+	newPost = {"acceptor":acceptor, "acceptee":acceptee, "postId":postID}
+	confirmations.insert_one(newPost)
+	return 
+
 @app.route("/inbox", methods=["GET","POST"])
 def populate_inbox_msgtable():
 	if request.method == 'GET':
@@ -62,8 +68,16 @@ def populate_inbox_msgtable():
 
 		return render_template("inbox.html", SenderList=SenderList, IDList=IDList)
 	else:
-		name = request.form["sender"]
-		
+		nameAndPost = request.form["sender"]
+		print nameAndPost
+		name, post = nameAndPost.split('_')
+		username = session['userName']
+		addNewConfirmation(username, name, post)
+		posts.delete_many({"id": post})
+		responds.delete_many({"postId": post})
+		return redirect(url_for('profile', userName=username))
+
+
 
 
 
@@ -207,6 +221,7 @@ if __name__ == '__main__':
 	users = db["users"]
 	posts = db["posts"]
 	responds = db["responds"]
+	confirmations = db["confirmation"]
 
 	app.run(debug = True)
   
