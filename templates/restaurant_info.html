@@ -229,7 +229,7 @@ input[type=text] {
             <h2>Previous Posts</h2>
           </div>
       
-          <form class='lala'>
+          <form class='lala' method="post">
               {% for each in posts %}
               <label style="text-align: center;">
                   <input type="radio" name="person" value="{{ each.sender }}"/> 
@@ -244,17 +244,16 @@ input[type=text] {
               <!-- <style>p.indent{ padding-left: 1.8em }</style> -->
               <img style="margin-left:15%;" src="https://image.flaticon.com/icons/png/128/25/25691.png" height="42" width="42">
               <text style="margin-left:1%; font-family:courier;">Respond To Previous Posts:</text><br>
-              <text style="margin-left:20%; font-family:courier;">Message:</text>
+              <text style="margin-left:20%; font-family:courier; ">Message:</text>
               <input style="margin-left:1%;" type="text" name="responseMessage" value="Hello"></input>
-              <input style="margin-left:5%;" type="submit" class="btn btn-custom btn-lg"></input><br>
+              <input style="margin-left:5%;" type="submit" class="btn btn-custom btn-lg" value="add new response"></input><br>
 
               <img style="margin-left:15%;" src="https://image.freepik.com/free-icon/add-file-button_318-85871.jpg" height="42" width="42">
               <text style="margin-left:1%; font-family:courier;">Add A New Post:</text><br>
-              <text style="margin-left:20%; font-family:courier;">Select A Time:</text>
-              <form class='lala'>
-                  <input type="time" id="myTime">        
-                  <input style="margin-left:24%;" type="submit" value="Submit" class="btn btn-custom btn-lg"></input>
-                  
+              <text style="margin-left:20%; font-family:courier; ">Select A Time:</text>
+              <form class='addNewPost'>
+                  <input type="time" id="myTime" name="postTime">        
+                  <input style="margin-left:24%;" type="submit" name="submit_btn" value="add new post" class="btn btn-custom btn-lg"></input>
               </form>
           </form>
         </div>
