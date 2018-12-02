@@ -44,6 +44,16 @@ def getAllRestaurantsInfo():
 	return jsonify(list(RestaurantsInfo))
 
 
+@app.route("/inbox", methods=["GET"])
+def populate_inbox_msgtable(session_userName):
+	InboxMsgs = responds.find({"receiver": session_userName})
+	SenderList = []
+	for record in InboxMsgs:
+		SenderList.append(record[respondPeople])
+	SenderList = set(SenderList)
+	SenderList = list(SenderList) #de-duplicate
+	return render_template("inbox.html", InboxMsgs=InboxMsgs, SenderList=SenderList)
+
 @app.route("/restaurants", methods=["GET"])
 def restaurants():
 	RestaurantsInfo = restaurants.find({})

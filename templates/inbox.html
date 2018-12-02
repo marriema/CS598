@@ -63,19 +63,12 @@
                         <label for="senderIDs">Reply To</label>
                         <select id="senderIDs" class="form-control">
                           {% for person in SenderList %}
-                            <option value="{{ person.senderName }}">{{ person.senderName }}</option>
+                            <option value="{{ person }}">{{ person }}</option>
                         </select>
                         <label>with msg</label>
                         </div>
                         
 
-                        <div class="row">
-                            <div class="col-sm-12 form-group-sm">
-                                <label for="itemDescription" class="">Reply Message</label>
-                                <textarea class="form-control" id="itemDescription" name="itemDescription" rows='4'
-                                    placeholder="accept the request and then reply a msg"></textarea>
-                            </div>
-                        </div>
                         <br>
                         <div class="row text-center">
                             <div class="col-sm-6 form-group-sm">
@@ -101,34 +94,31 @@
                             <div class="panel panel-primary">
                                 <!-- Default panel contents -->
                                 <div class="panel-heading">Inbox emails</div>
-                                {% if allItems %}
+                                {% if InboxMsgs %}
                                 <div class="table table-responsive">
                                     <table class="table table-bordered table-striped" style="background-color: #f5f5f5">
                                         <thead>
                                             <tr>
-                                                <th>MSG from</th>
-                                                <th>Phone number</th>
+                                                <th>MSG from</th>                                              
                                                 <th>Content</th>                        
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for get in allItems %}
+                                            {% for get in InboxMsgs %}
                                             <tr>
-                                                <input type="hidden" value="{{ get.senderID }}" class="msgSenderId">
+                                                <input type="hidden" value="{{ get.respondPeople }}" class="msgSenderId">
                                                 
-                                                <th class="itemSenderName">{{ get.senderName }}</th>
+                                                <th class="itemSenderName">{{ get.respondPeople }}</th>
                                                 
-                                                <td>
-                                                    <span id="itemName-{{ get.senderID }}">{{ get.phoneNumber }}</span>
-                                                </td>
+                                            
                                                 {# option1 #}
                                                 <td>
-                                                    <span id="itemContent-{{ get.senderID }}" data-toggle="tooltip" title="{{ get.msgContent }}" data-placement="auto"> 
+                                                    <span id="itemContent-{{ get.respondPeople }}" data-toggle="tooltip" title="{{ get.respondMessage }}" data-placement="auto"> 
                                                     </span>
                                                 </td>
                                                 {# option2 #}
                                                 <td>
-                                                    <span id="itemContent-{{ get.senderID }}">{{ get.msgContent }}</span>
+                                                    <span id="itemContent-{{ get.respondPeople }}">{{ get.respondMessage }}</span>
                                                 </td>                      
                                             </tr>
                                             {% endfor %}
