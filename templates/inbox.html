@@ -99,8 +99,7 @@
                                     <table class="table table-bordered table-striped" style="background-color: #f5f5f5">
                                         <thead>
                                             <tr>
-                                                <th>MSG from</th>
-                                                <th>Phone number</th>
+                                                <th>MSG from</th>                                              
                                                 <th>Content</th>                        
                                             </tr>
                                         </thead>
@@ -111,9 +110,7 @@
                                                 
                                                 <th class="itemSenderName">{{ get.respondPeople }}</th>
                                                 
-                                                <td>
-                                                    <span id="itemName-{{ get.respondPeople }}">{{ get.phoneNumber }}</span>
-                                                </td>
+                                            
                                                 {# option1 #}
                                                 <td>
                                                     <span id="itemContent-{{ get.respondPeople }}" data-toggle="tooltip" title="{{ get.respondMessage }}" data-placement="auto"> 
