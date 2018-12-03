@@ -92,7 +92,6 @@ def scrape(rss_link):
 	return ret
 
 
-@app.route("/restaurants", methods=["GET","POST"])
 @app.route("/inbox", methods=["GET","POST"])
 def populate_inbox_msgtable():
 	if request.method == 'GET':
@@ -116,7 +115,7 @@ def populate_inbox_msgtable():
 
 
 
-@app.route("/restaurants", methods=["GET"])
+@app.route("/restaurants", methods=["GET","POST"])
 def restaurants():
 	
 	RestaurantsInfo = restaurants.find({})
