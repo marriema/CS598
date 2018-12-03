@@ -42,6 +42,34 @@ def addNewUserAccount(username,password):
 	return
 
 
+#a user send a new response to a post
+def addNewResponseToPost(postId, responseUserName, sentMsg):
+	# print(postId)
+	# print(responseUserName)
+	# print(sentMsg)
+	responses = posts.find_one({"id": postId})["respondedPeople"]
+	# print(responses)
+	if responseUserName not in responses:
+		responses[responseUserName] = sentMsg
+
+	# print(responses)
+	posts.find_one_and_update({"id":postId}, {'$set':{"respondedPeople": responses}})
+	receiver = postId.split(" ")[0]
+	# print(receiver)
+	newResponse = {"respondPeople": responseUserName, "respondMessage": sentMsg, "postID":postId, "receiver":receiver}
+	responds.insert_one(newResponse)
+
+	return
+
+
+def findAllRestaurantsPosts(RestaurantName):
+	cursor = posts.find({"restaurant": RestaurantName})
+	restaurantPosts = []
+	for post in cursor:
+		restaurantPosts.append(post)
+	return restaurantPosts
+
+
 @app.route("/getAllRestaurantsInfo", methods=["GET"])
 #get all resturants Infomation
 def getAllRestaurantsInfo():
@@ -65,6 +93,30 @@ def scrape(rss_link):
 
 
 @app.route("/restaurants", methods=["GET","POST"])
+@app.route("/inbox", methods=["GET","POST"])
+def populate_inbox_msgtable():
+	if request.method == 'GET':
+		session_userName = session['userName'] 
+		print session_userName
+		InboxMsgs = responds.find({"receiver": session_userName})
+		SenderList = {}
+		IDList = {}
+		print InboxMsgs
+		for record in InboxMsgs:
+			name = record["respondPeople"]
+			message = record["respondMessage"]
+			postid = record['postID']
+			SenderList[name] = message
+			IDList[name] = postid
+
+		return render_template("inbox.html", SenderList=SenderList, IDList=IDList)
+	else:
+		name = request.form["sender"]
+		
+
+
+
+@app.route("/restaurants", methods=["GET"])
 def restaurants():
 	
 	RestaurantsInfo = restaurants.find({})
@@ -77,21 +129,76 @@ def restaurants():
 		return render_template("main.html", RestaurantsInfo=RestaurantsInfo, reviews=ret)
 
 
+
 @app.route("/restaurant_detail/<string:RestaurantName>", methods=["GET", "POST"])
 def restaurant_detail(RestaurantName):
 	RestaurantInfo = restaurants.find_one({"name": RestaurantName})
-	cursor = posts.find({"restaurant": RestaurantName})
+	# cursor = posts.find({"restaurant": RestaurantName})
+	# restaurantPosts = []
+	# for post in cursor:
+	# 	restaurantPosts.append(post)
 	
 	if request.method == 'GET':
-		restaurantPosts = []
-		for post in cursor:
-			restaurantPosts.append(post)
+		#store current restaurant in session
+		session['currRestaurant'] = RestaurantName
+
+		# cursor = posts.find({"restaurant": RestaurantName})
+		# restaurantPosts = []
+		# for post in cursor:
+		# 	restaurantPosts.append(post)
+		# print(RestaurantInfo)
+		restaurantPosts = findAllRestaurantsPosts(RestaurantName)
 		return render_template("restaurant_info.html", RestaurantInfo=RestaurantInfo, posts=restaurantPosts)
+
+	else:
+		if request.form['submit_btn'] == "add new post":
+			postUserName = session['userName']
+			thisRestaurant = session['currRestaurant']
+			time = request.form['postTime']
+
+			newID = postUserName + " " + thisRestaurant + " " + time
+			newPost = {"sender":postUserName, "restaurant": thisRestaurant, "time":time, "respondedPeople":{}, "id": newID}
+			posts.insert_one(newPost)
+
+			#search posts related to current restaurant after inserting a new post
+			# cursor = posts.find({"restaurant": thisRestaurant})
+			# restaurantPosts = []
+			# for post in cursor:
+			# 	restaurantPosts.append(post)
+			restaurantPosts = findAllRestaurantsPosts(thisRestaurant)
+
+			return render_template("restaurant_info.html", RestaurantInfo=RestaurantInfo, posts=restaurantPosts)
+
+		elif request.form['submit_btn'] == "add new response":
+				selectedPost = request.form['person']
+				# print(selectedPost)
+				valueOfSelectedPost = selectedPost.split(" ")
+				postUser, postTime = valueOfSelectedPost[0], valueOfSelectedPost[1]
+
+				thisRestaurant = session['currRestaurant']
+
+				postID = postUser + " " + thisRestaurant + " " + postTime
+				responseUserName = session['userName']
+				sentMsg = request.form['responseMessage']
+				# print(postID, responseUserName, sentMsg)
+
+				# cursor = posts.find({"restaurant": RestaurantName})
+				# restaurantPosts = []
+				# for post in cursor:
+				# 	restaurantPosts.append(post)
+				restaurantPosts = findAllRestaurantsPosts(RestaurantName)
+				addNewResponseToPost(postID, responseUserName, sentMsg)
+
+				return render_template("restaurant_info.html", RestaurantInfo=RestaurantInfo, posts=restaurantPosts)
+
+
+
 
 
 @app.route("/profile/<string:userName>", methods=["GET"])
 def profile(userName):
 	return render_template("profile.html", userName=userName)
+
 
 @app.route("/preferences/<string:userName>", methods=["GET", "POST"])
 def preferences(userName):
@@ -151,6 +258,29 @@ def preference_read_only(userName):
 @app.route("/messages", methods=["GET", "POST"])
 def messages():
 	return render_template("user_profile_msgbox.html")
+
+
+# @app.route("/messages", methods=["GET", "POST"])
+# #a user send a new response to a post
+# def addNewResponseToPost(postId, responseUserName, sentMsg):
+# 	responses = posts.find_one({"id": postId})["respondedPeople"]
+# 	if responseUserName not in responses:
+# 		responses[responseUserName] = sentMsg
+
+# 	posts.find_one_and_update({"id":postId}, {'$set':{"respondedPeople": responses}})
+# 	newResponse = {"respondPeople": responseUserName, "respondMessage": sentMsg, "postID":postId}
+# 	responds.insert_one(newResponse)
+
+# 	return
+
+
+# @app.route("/messages", methods=["GET", "POST"])
+# def addNewPost(restaurantName, postUserName, time):
+# 	newID = postUserName + " " + restaurantName + " " + time
+# 	newPost = {"sender":postUserName, "restaurant":restaurantName, "time":time, "respondedPeople":[], "id": newID}
+# 	posts.insert_one(newPost)
+# 	return 
+
 
 if __name__ == '__main__':
 	client = pymongo.MongoClient('mongodb://localhost:27017/')

@@ -15,23 +15,23 @@
 
   <style>
     .btn-custom {
-	text-transform: uppercase;
-	color: #777;
-	background-color: transparent;
-	border: 2px solid #777;
-	padding: 14px 20px;
-	margin: 0;
-	font-size: 15px;
-	font-weight: 500;
-	letter-spacing: 0.5px;
-	border-radius: 0;
-	margin-top: 20px;
-	transition: all 0.3s;
+  text-transform: uppercase;
+  color: #777;
+  background-color: transparent;
+  border: 2px solid #777;
+  padding: 14px 20px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border-radius: 0;
+  margin-top: 20px;
+  transition: all 0.3s;
 }
 .btn-custom:hover, .btn-custom:focus, .btn-custom.focus, .btn-custom:active, .btn-custom.active {
-	color: #ddd;
-	border: 2px solid #a7c44c;
-	background-color: #a7c44c;
+  color: #ddd;
+  border: 2px solid #a7c44c;
+  background-color: #a7c44c;
 }
 
 *, *:before, *:after {
@@ -90,92 +90,103 @@ label:hover {
 
 /* Header Section */
 .intro {
-	display: table;
-	width: 100%;
+  display: table;
+  width: 100%;
   padding: 0;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	background-size: cover;
-	-o-background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
 .intro .overlay {
-	background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.4);
 }
 .intro h1 {
-	font-family: 'Playball',cursive;
-	color: #fff;
-	font-size: 5em;
-	font-weight: 500;
-	margin-top: 0;
+  font-family: 'Playball',cursive;
+  color: #fff;
+  font-size: 5em;
+  font-weight: 500;
+  margin-top: 0;
 }
 .intro span {
-	color: #a7c44c;
-	font-weight: 600;
+  color: #a7c44c;
+  font-weight: 600;
 }
 .intro p {
-	color: #fff;
-	font-size: 24px;
-	font-weight: 400;
+  color: #fff;
+  font-size: 24px;
+  font-weight: 400;
   margin-top: 150px;
   font-family: 'Open Sans';
 
 }
 header .intro-text {
-	padding-top: 200px;
-	padding-bottom: 50px;
+  padding-top: 200px;
+  padding-bottom: 50px;
   text-align: center;
   font-family: 'Open Sans';
 }
 
 /* Features Section */
 #features {
-	padding: 120px 0;
+  padding: 120px 0;
 }
 #features .features-item {
-	margin: 0 20px;
+  margin: 0 20px;
 }
 #features img {
-	margin: 30px auto 20px;
+  margin: 30px auto 20px;
 }
 #features .about-img:before {
-	display: block;
-	content: '';
-	position: absolute;
-	top: 8px;
-	right: 8px;
-	bottom: 8px;
-	left: 8px;
-	border: 1px solid rgba(255, 255, 255, 0.5);
+  display: block;
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  left: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 #features p {
-	line-height: 24px;
-	margin: 15px 0 30px;
+  line-height: 24px;
+  margin: 15px 0 30px;
 }
 
 h2 {
-	font-weight: 400;
+  font-weight: 400;
   font-size: 38px;
   font-family: 'Raleway', sans-serif;
-	color: #333;
-	text-transform: uppercase;
-	position: relative;
-	margin-top: 10px;
-	margin-bottom: 15px;
+  color: #333;
+  text-transform: uppercase;
+  position: relative;
+  margin-top: 10px;
+  margin-bottom: 15px;
   padding-bottom: 20px;
   text-align: center;
 }
 h2::after {
-	position: absolute;
-	content: "";
-	background: #d43031;
-	height: 2px;
-	width: 70px;
-	bottom: 0;
-	margin-left: -35px;
+  position: absolute;
+  content: "";
+  background: #d43031;
+  height: 2px;
+  width: 70px;
+  bottom: 0;
+  margin-left: -35px;
   left: 50%;
 }
   .btn-sm {
   padding: 10px;
+}
+
+input[type=text] {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
 }
 
   </style>
@@ -215,13 +226,13 @@ h2::after {
     <div id="features" class="text-center">
         <div class="container">
           <div class="section-title">
-            <h2>Posts</h2>
+            <h2>Previous Posts</h2>
           </div>
       
-          <form class='lala'>
+          <form class='lala' method="post">
               {% for each in posts %}
               <label style="text-align: center;">
-                  <input type="radio" name="person" value="{{ each.sender }}"/> 
+                  <input type="radio" name="person" value="{{ each.sender }} {{each.time}}"/> 
                   <i></i>
                   <span>{{ each.sender }} <span><i style="color:#a7c44c" class="fas fa-clock"></i> {{ each.time }}</span><br></span>
                   <br>
@@ -230,12 +241,25 @@ h2::after {
               </label>
               {% endfor %}
     
-              <input style="margin-left:45%;" type="submit" class="btn btn-custom btn-lg"></input>
+              <!-- <style>p.indent{ padding-left: 1.8em }</style> -->
+              <img style="margin-left:15%;" src="https://image.flaticon.com/icons/png/128/25/25691.png" height="42" width="42">
+              <text style="margin-left:1%; font-family:courier;">Respond To Previous Posts:</text><br>
+              <text style="margin-left:20%; font-family:courier; ">Message:</text>
+              <input style="margin-left:1%;" type="text" name="responseMessage" value="Hello"></input>
+              <input style="margin-left:5%;" type="submit" name="submit_btn" class="btn btn-custom btn-lg" value="add new response"></input><br>
+
+              <img style="margin-left:15%;" src="https://image.freepik.com/free-icon/add-file-button_318-85871.jpg" height="42" width="42">
+              <text style="margin-left:1%; font-family:courier;">Add A New Post:</text><br>
+              <text style="margin-left:20%; font-family:courier; ">Select A Time:</text>
+              <form class='addNewPost'>
+                  <input type="time" id="myTime" name="postTime">        
+                  <input style="margin-left:24%;" type="submit" name="submit_btn" value="add new post" class="btn btn-custom btn-lg"></input>
+              </form>
           </form>
         </div>
         
       </div>
-
+<!-- 
     <div class="post">
 
      
@@ -247,7 +271,7 @@ h2::after {
           
       </form>
          
-    </div>
+    </div> -->
        
  
    
