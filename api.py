@@ -1,6 +1,11 @@
 from flask import Flask, abort, request, jsonify, render_template, redirect, url_for, session
 import pymongo
-import json
+import json, re
+
+# import libraries
+import urllib2
+from urllib2 import urlopen
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -44,10 +49,33 @@ def getAllRestaurantsInfo():
 	return jsonify(list(RestaurantsInfo))
 
 
-@app.route("/restaurants", methods=["GET"])
+def scrape(rss_link):
+	soup = BeautifulSoup(urlopen(rss_link))
+	reviews = soup.find_all("item")
+	ret = {}
+	for each in reviews:
+		tmp = each.find("title").text
+		restaurant_name = re.split("\(", tmp)[0].rstrip()
+		t = re.split("\(", tmp)[1].split(')')[0]
+		rating = t.split('/')[0]
+		ret[restaurant_name] = int(rating)
+
+
+	return ret
+
+
+@app.route("/restaurants", methods=["GET","POST"])
 def restaurants():
+	
 	RestaurantsInfo = restaurants.find({})
-	return render_template("main.html", RestaurantsInfo=RestaurantsInfo)
+	if request.method == 'GET':
+		return render_template("main.html", RestaurantsInfo=RestaurantsInfo)
+	else:
+		rss_link = request.form["rss"]
+		ret = scrape(rss_link)
+		print ret
+		return render_template("main.html", RestaurantsInfo=RestaurantsInfo, reviews=ret)
+
 
 @app.route("/restaurant_detail/<string:RestaurantName>", methods=["GET", "POST"])
 def restaurant_detail(RestaurantName):

@@ -64,6 +64,19 @@ body{
   </style>
 </head>
 
+<script>
+  var dict = {};
+  {% if reviews is defined %}
+    {% for key,val in reviews.items() %}
+       var k = "{{ key|safe }}"
+       var v = "{{ val|safe }}"
+       dict[k] = v
+    {% endfor %}
+  {% endif %}
+  console.log(dict)
+</script>
+ 
+
 <body>
   <header>
     <nav>
@@ -104,6 +117,17 @@ body{
       </div>
     </section>
 
+    <form method="POST">
+      <input name="rss">
+      <input type="submit">
+    </form>
+
+    {% if reviews is defined %}
+      <h2> Your Reviewed Restaurants</h2>
+      {% for key,val in reviews.items() %}
+        <h3>{{ key }}</h3>
+      {% endfor %}
+    {% endif %}
       
       <!-- Restaurant List table part see main.js--use js to create html tags+content-->
       
@@ -127,6 +151,7 @@ body{
 
 
 </body>
+
 
 
 
